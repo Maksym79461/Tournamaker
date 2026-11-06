@@ -6,7 +6,7 @@ services:
     container_name: tournamaker-sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
+      - MSSQL_SA_PASSWORD=Tournamaker_2026!
     ports:
       - "1433:1433"
     volumes:
