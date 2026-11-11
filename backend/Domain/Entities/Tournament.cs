@@ -23,5 +23,9 @@ namespace Domain.Entities
 
         // Зв'язок: "Один турнір містить багато команд"
         public ICollection<Team> Teams { get; set; } = new List<Team>();
+
+        public int Format { get; set; } // Можна пізніше зробити Enum (SingleElimination, RoundRobin тощо)
+        public int Status { get; set; } // Наприклад: 0 - Створено, 1 - В процесі, 2 - Завершено
+                                        // (Поле CreatedAt у нас вже є)
     }
 }

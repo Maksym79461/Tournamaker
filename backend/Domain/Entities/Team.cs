@@ -15,5 +15,8 @@ namespace Domain.Entities
         // До якого турніру належить ця команда
         public Guid TournamentId { get; set; }
         public Tournament Tournament { get; set; } = null!;
+
+        public string? LogoUrl { get; set; } // Посилання на логотип команди
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

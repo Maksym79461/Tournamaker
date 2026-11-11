@@ -19,5 +19,8 @@ namespace Domain.Entities
 		// Навігаційна властивість (Зв'язок).
 		// Каже системі: "Один користувач може бути організатором багатьох турнірів".
 		public ICollection<Tournament> OrganizedTournaments { get; set; } = new List<Tournament>();
-	}
+
+        public string PasswordHash { get; set; } = string.Empty; // Для безпечного збереження паролів
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
 }
