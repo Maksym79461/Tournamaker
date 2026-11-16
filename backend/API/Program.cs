@@ -21,6 +21,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Реєстрація репозиторіїв (Dependency Injection)
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 
 builder.Services.AddCors(options =>
 {

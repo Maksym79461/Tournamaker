@@ -22,6 +22,44 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.Match", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Round")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("Team1Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Team2Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("WinnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Team1Id");
+
+                    b.HasIndex("Team2Id");
+
+                    b.HasIndex("TournamentId");
+
+                    b.HasIndex("WinnerId");
+
+                    b.ToTable("Matches");
+                });
+
             modelBuilder.Entity("Domain.Entities.Team", b =>
                 {
                     b.Property<Guid>("Id")
@@ -118,18 +156,50 @@ namespace Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Match", b =>
+                {
+                    b.HasOne("Domain.Entities.Team", "Team1")
+                        .WithMany()
+                        .HasForeignKey("Team1Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.Team", "Team2")
+                        .WithMany()
+                        .HasForeignKey("Team2Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Team", "Winner")
+                        .WithMany()
+                        .HasForeignKey("WinnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Team1");
+
+                    b.Navigation("Team2");
+
+                    b.Navigation("Tournament");
+
+                    b.Navigation("Winner");
+                });
+
             modelBuilder.Entity("Domain.Entities.Team", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Captain")
                         .WithMany()
                         .HasForeignKey("CaptainId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Tournament", "Tournament")
                         .WithMany("Teams")
                         .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Captain");
